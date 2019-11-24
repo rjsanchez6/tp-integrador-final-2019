@@ -1,0 +1,10 @@
+.informes{
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+}
+
+.btn a{
+    text-decoration: none;
+    color: white;
+}

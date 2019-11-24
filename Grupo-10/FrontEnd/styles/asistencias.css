@@ -1,0 +1,24 @@
+.asistencias{
+    /* background-color: red; */
+    margin-top: 80px;
+    /* display: flex; */
+    /* width: 100%; */
+    align-self: center;
+}
+
+table{
+    /* border: 1px red solid; */
+    border-collapse: collapse;
+    /* background-color: white; */
+}
+
+tr, td{
+    border: 1px #ced4da solid;
+    padding: 10px;
+}
+
+.search{
+    /* background-color: white; */
+    border: 1px #ced4da solid;
+    padding:10px;
+}

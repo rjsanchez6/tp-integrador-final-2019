@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet"> <!-- DatePicker -->
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="../css/asistencias.css">
+    <!--Fontawesome CDN-->
+    <script src="https://kit.fontawesome.com/b65080887d.js"></script>
+    <title>MAXELEC</title>
+    <link rel="stylesheet" href="styles/general.css">
+    <link rel="stylesheet" href="styles/navbar.css">
+    <link rel="stylesheet" href="styles/footer.css">
+    <link rel="stylesheet" href="styles/clientes.css">
+    <link rel="stylesheet" href="stsyles/login.css">
+    <link rel="stylesheet" href="styles/login_facu.css">
+    <link rel="stylesheet" href="styles/asistencias.css">
+    <link rel="stylesheet" href="styles/asistencias_facu.css">
+    <link rel="stylesheet" href="styles/nueva_asistencia.css">
+    <link rel="stylesheet" href="styles/informes.css">
+    <link rel="stylesheet" href="styles/custom-input.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet"> 
+
+</head>
+<body>
+    <!-- navbar -->
+    <div class="navbar-nb" v-if="navbar">
+        <!-- contenedor principal de la navbar -->
+        <div class="container">
+            <!-- logotipo MAXELEC -->
+            <div class="header">
+                <img class="logo" src="./assets/navbar/logo.jpeg" alt="">
+                <img v-if="windowWidth<768" @click="mostrarMenu" class="button" src="./assets/navbar/menu.svg" alt="">
+            </div>
+            <!-- menu donde estan todos los items -->
+            <div class="menu-nb" v-if="menu">
+                <router-link tag="div" class="item-nb" v-for="item in items" exact :to='item.link'>
+                    <a>{{item.name}}</a>    
+                </router-link>
+            </div>
+        </div>
+    </div>
+
+    <main :class="{ bglogin: $route.path=='/' }">
+        <router-view></router-view>
+        <!-- <div class="footer-nb">
+            <p>Desarrollado por Grupo © Software 2019- Derechos Reservados</p>
+        </div> -->
+    </main>
+    <!-- #343a40 #998a75 -->
+    <!-- <footer id="" class="py-4 bg-dark text-white-50" style="margin-top: 50px">
+        <div class="">
+        <small>Copyright &copy; Your Website</small>
+        <p style="font-size:120%">Desarrollado por Grupo © Software 2019- Derechos Reservados</p>
+        </div>
+    </footer>   -->
+
+    <!-- <template id="login">
+        <div class="login" >
+            <div class="logo">
+                <img class="image" src="assets/login/logo.jpeg" >
+            </div>
+            <div class="input">
+                <img src="assets/login/user-solid.svg" >
+                <input type="text" placeholder="Username">
+            </div>
+            <div class="input">  
+                <img src="assets/login/lock-solid.svg">
+                <input type="password" placeholder="Password">
+            </div>
+            <div class="button" @click="login()">
+                <a>LOGIN</a>
+            </div>
+        </div>
+    </template> -->
+
+    <template id="login">
+            <div class="container">
+                    <div class="d-flex justify-content-center h-100">
+                        <div class="card-login">
+                            <div class="card-header">
+                                <div class="logo">
+                                    <img src="assets/login/logo.svg">
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <form>
+                                    <div class="input-group form-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Usuario">
+            
+                                    </div>
+                                    <div class="input-group form-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-key"></i></span>
+                                        </div>
+                                        <input type="password" class="form-control" placeholder="Contraseñas">
+                                    </div>
+                                    <div class="row align-items-center remember">
+                                        <input type="checkbox">Recordarme
+                                    </div>
+                                    <div class="form-group login-btn">
+                                        <a class="btn float-right login_btn" @click="login()" role="button">Ingresar</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    </template>
+
+    <template id="clientes">
+        <div class="clientes-root">
+            <div class="navbar-nb clientes">
+                <!-- contenedor principal de la navbar -->
+                <div class="container">
+                    <!-- logotipo MAXELEC -->
+                    <div class="header">
+                        <img class="logo" src="./assets/navbar/logo.jpeg" alt="">
+                    </div>
+                    <!-- menu donde estan todos los items -->
+                    <div class="menu-nb">
+                        <div class="item-nb clientes">
+                            <a>Asistencia Online</a>    
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clientes-banner">
+                <p class="">Te ayudamos a resolver todas tus dudas <br> brindando asistencia de calidad.</p>
+            </div>
+            <div class="form-clientes">
+                <div class="form-online">
+
+                    <transition name=slide mode="out-in">
+                        <div class="form-producto" v-if="producto" key="aparecer">
+                            <h2 class="titulo">¿En qué podemos ayudarte?</h2>
+                            <p class="descripcion"> Complete los siguientes datos sobre su producto y su consulta:</p>
+                            <div class="info-producto">
+                                <div class="inputs">
+                                    <custom-select 
+                                        :name="'Producto'" 
+                                        :select="'producto'" 
+                                        :options="['Anafe', 'Termotanque']" 
+                                        class="form-width-large-nb"
+                                    ></custom-select>
+                                    <custom-input :name="'Modelo'" class="form-width-large-nb"></custom-input> 
+                                </div>
+                                <div class="preview">
+                                    <custom-file-input @imgloaded="setPreview(...arguments)" :name="'Foto del producto'"></custom-file-input>    
+                                    <!-- <label>Vista previa de su producto:</label> -->
+                                    <div 
+                                        class="preview-img" 
+                                        :style="`background-image: url(${imagePreview})`"
+                                    ></div>
+                                </div>
+                                <div class="consulta-text">
+                                    <custom-text-input :name="'Descríbanos su consulta'"></custom-text-input>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-producto" v-if="!producto" key="ocultar">
+                            <h2 class="titulo">Completá con tus datos</h2>
+                            <p class="descripcion"> Te vamos a solicitar tus datos personales para poder identificarte como nuestro cliente:</p>
+                            <div class="info-datos">
+                                <div class="form-group-nb">
+                                    <custom-input :name="'Nombre y apellido'" class=""></custom-input>
+                                    <div class="group-row-nb">
+                                        <custom-input :name="'DNI'" class="form-width-large-nb"></custom-input>
+                                        <custom-input :name="'Teléfono'" class="form-width-large-nb"></custom-input>
+                                    </div>
+                                    <custom-input :name="'Corre Electrónico'" class=""></custom-input>
+                                    <custom-input :name="'Domicilio'" class=""></custom-input>
+                                    <div class="group-row-nb">
+                                        <custom-select 
+                                            :name="'Provincia'" 
+                                            :select="'provincia'" 
+                                            :options="['Catamarca', 'Santa Fe', 'Corrientes', 'Córdoba', 'Vilellas']" 
+                                            class="form-width-large-nb"
+                                        ></custom-select>
+                                        <custom-input :name="'C.P'" class="form-width-large-nb"></custom-input>
+                                    </div>
+                                    <custom-input :name="'Localidad'" class=""></custom-input> 
+                                </div>
+    
+                            </div>
+                        </div>
+                    </transition>
+
+                    <div class="form-boton" @click="changeForm( producto ? 'slide2' : 'send' )">{{ producto ? 'Continuar': 'Enviar' }}</div>
+                </div>
+                <div class="call-us">
+                    <h2 class="titulo">Atención telefónica</h2>
+                    <p class="descripcion">Sí preferís, podés contactarte con nosotros <br> de 9hs a 18hs en días hábiles. <br> Estamos para ayudarte.</p>
+                    <a class="telefono">0800 485 5512</a>
+                </div>
+            </div>
+        </div>
+
+    </template>
+
+    <template id="input">
+        <div class="custom-input-nb">
+            <div class="label-nb">
+                <label>{{name}}: </label>
+            </div>
+            <div class="input-nb">
+                <input type="text" @input="$emit('event',$event.target.value)">
+            </div>
+        </div>
+    </template>
+
+    <template id="file-input">
+        <div class="custom-file-input-nb">
+            <div class="label-nb">
+                <label>{{name}}: </label>
+            </div>
+            <div class="file-input-nb">
+                <input @change="$emit('imgloaded',$event)" type="file">
+            </div>
+        </div>
+    </template>
+
+    <template id="text-input">
+        <div class="custom-text-input-nb">
+            <div class="label-nb">
+                <label>{{name}}: </label>
+            </div>
+            <div class="text-input-nb">
+                <textarea></textarea>
+            </div>
+        </div>
+    </template>
+
+    <template id="select">
+        <div class="custom-input-nb">
+            <div class="label-nb">
+                <label>{{name}}: </label>
+            </div>
+            <div class="select-nb">
+                <select name="" id="">
+                    <option value="">Seleccione {{select}}</option>
+                    <option 
+                        :value="provincia"
+                        @click="$emit('event', $event.target.value)" 
+                        v-for="provincia in options"
+                    >{{provincia}}</option>
+                </select>
+            </div>
+        </div>
+    </template>
+
+    <template id="nueva_asistencia">
+        <div class="nueva_asistencia main_container">
+            <div class="datos_cliente datos">
+                <label class="title">
+                    <b>Datos del Cliente:</b>
+                </label>
+                <div class="form-group-nb cuadrito">
+                    <div class="group-row-nb">
+                        <custom-input :name="'Nombre y apellido'" class="form-width-large-nb"></custom-input>     
+                        <custom-input :name="'DNI'" class="form-width-small-nb"></custom-input>
+                        <custom-input :name="'Teléfono'" class="form-width-small-nb"></custom-input>
+                    </div>
+                    <div class="group-row-nb">
+                        <custom-input :name="'Corre Electrónico'" class="form-width-large-nb"></custom-input>     
+                        <custom-input :name="'Domicilio'" class="form-width-large-nb"></custom-input>     
+                    </div>
+                    <div class="group-row-nb">
+                        <custom-select 
+                            :name="'Provincia'" 
+                            :select="'provincia'" 
+                            :options="['Catamarca', 'Santa Fe', 'Corrientes', 'Córdoba', 'Vilellas']" 
+                            class="form-width-medium-nb"
+                        ></custom-select>
+                        <custom-input :name="'Localidad'" class="form-width-large-nb"></custom-input>  
+                        <custom-input :name="'C.P'" class="form-width-small-nb"></custom-input>     
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="datos_producto datos ">
+                <div class="title">
+                    <label class=""><b>Datos del Producto:</b></label>
+                </div>
+                <div class="group-row-nb cuadrito">
+                    <custom-select 
+                        :name="'Tipo de Producto'" 
+                        :select="'producto'" 
+                        :options="['Anafe', 'Termotanque']"
+                        class="form-width-large-nb"
+                        @event="setData('producto',...arguments)"
+                    ></custom-select>
+                    <custom-input 
+                        :name="'Número de Producto'"
+                        @event="setData('modelo',...arguments)"
+                    ></custom-input>
+                    
+                </div>
+            </div>
+            <hr>
+            <div class="verificacion datos" v-if="producto && modelo">
+
+                <div class="asesoria " >
+                    <h5 class="title">Pasos a seguir:</h5>
+                    <h6 class="sub_title">Problemas comunes de {{producto}} {{modelo}}</h6>
+                    <div class="soluciones">
+                        <ol>
+                            <li>1. Preguntar si se encuentra enchufado.</li>
+                            <li>2. Comprobar luz led de encendido.</li>
+                            <li>3. Comprobar ruidos internos.</li>
+                            <li>4. Preguntar estados de las llaves de paso.</li>
+                        </ol>
+                    </div>
+                    <div class="options">
+                        <a>Anterior</a>
+                        <a>Siguiente</a>
+                    </div>
+                </div>
+
+                <div 
+                    v-if="producto=='Termotanque'" 
+                    class="producto" 
+                    :style="{'background-image': `url('assets/img/termotanque.jpg')`}">
+                </div>
+                <div 
+                    v-else
+                    class="producto"
+                    :style="{'background-image': `url('assets/img/anafe.jpg')`}">
+                </div>
+
+            </div>
+
+            <div class="resultado datos" v-if="producto && modelo">
+                <div class="form-row-nb flex-center">
+                    <label class="title">¿Se llegó a una solución?</label>
+                    <div class="buttons-nb">
+                        <button type="" class="btn-nb green-nb" @click="asistenciaON()">Si</button>
+                        <button type="" class="btn-nb red-nb" @click="reclamoON()">No</button>
+                    </div>
+                </div>  
+                <div class="form-row-nb flex-center" v-if="band && asistencia">
+                    <label>Describir solución:</label>
+                    <div class="textarea">
+                        <textarea></textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- <hr> -->
+            <div class="datos_tecnico datos" v-if="band && reclamo">
+                <div class="title">
+                    <h4>Servicio Técnico cercano al cliente:</h4>
+                </div>
+                <div class="info">
+                    <div class="map">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d14155.090197682792!2d-58.93209349999999!3d-27.507448299999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2sar!4v1561244531188!5m2!1ses-419!2sar"  frameborder="0" style="border:0" allowfullscreen></iframe>
+                    </div>
+                    <div class="datos-tec">
+                        <div class="">                            
+                            <h5 class="title">Service NEA</h5>
+                            <h4 class="sub_title">Reparaciones de Termotanques</h4>
+                        </div>
+                        <div class="domicilio">
+                            <ul>
+                                <li> Av. 9 de Julio 569</li>
+                                <li> Teléfono: 0362-4404022</li>
+                                <li> 8:00hs a 12:00hs</li>
+                                <li> 17:00hs a 21:00hs</li>
+                            </ul>
+                        </div>
+                        <div class="options">
+                            <a>Anterior</a>
+                            <a>Siguiente</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="choose datos" v-show="band">
+                <button class="btn-nb green-nb" v-if="asistencia" @click="goAsistencias()">Guardar Asistencia</button>
+                <button class="btn-nb red-nb" v-if="reclamo" @click="goReclamos()">Generar Reclamo</button>
+            </div>
+        </div>
+    </template>
+
+    <template id="asistencias" >
+        <div class="container total-vh mt-3" style="margin-top: 10% !important;">
+            
+                <form >
+                    <h1 class="text-center"> Últimas Asistencias</h1>
+                    
+                    <div class="form-group">
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fas fa-search"></i></div>
+                            </div>
+                            <input type="text" id="myInput" onkeyup="myFunction()" class="form-control" placeholder="Buscar..."/>
+                        </div>
+                    </div>
+
+                <table id="myTable" class="table table-hover table-bordered table-striped">
+                    <thead class="thead-dark thead-max">
+                        <tr>
+                            <th scope="col" class="space-between">ID Asistencia <i class="fas fa-sort text-right"></i></th>
+                            <th scope="col" class="space-between">Cliente <i class="fas fa-sort text-right"></i> </th>
+                            <th scope="col" class="space-between">Fecha de Creación <i class="fas fa-sort text-right"></i> </th>
+                            <th scope="col" class="space-between">Tipo de Comunicación <i class="fas fa-sort text-right"></i> </th>
+                            <th scope="col" class="space-between">Estado <i class="fas fa-sort text-right"></i> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr @click="goTo('/asistencias/001')">
+                            <th scope="row">001</td>
+                            <td>33333333</td>
+                            <td>2019-03-23</td>
+                            <td>Formulario Web</td>
+                            <td>Nueva consulta <a class="badge badge-secondary" >Contestar</a></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">002</td>
+                            <td>35496962</td>
+                            <td>2019-03-30</td>
+                            <td>Llamada telefónica</td>
+                            <td>Derivado en reclamo <a @click="goTo('/reclamos/218975')" class="badge badge-secondary">#218975</a></td>     <!-- Redirige a Detalle Reclamo -->
+                        </tr>
+                        <tr>
+                            <th scope="row">003</td>
+                            <td>37777777</td>
+                            <td>2019-04-02</td>
+                            <td>Formulario Web</td>
+                            <td>Nueva consulta <a class="badge badge-secondary" role="button">Contestar</a></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">004</td>
+                            <td>27272727</td>
+                            <td>2019-04-03</td>
+                            <td>Llamada telefónica</td>
+                            <td>Resuelto</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">005</td>
+                            <td>38833883</td>
+                            <td>2019-04-03</td>
+                            <td>Llamada telefónica</td>
+                            <td>Resuelto</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">006</td>
+                            <td>35813853</td>
+                            <td>2019-04-03</td>
+                            <td>Formulario Web</td>
+                            <td>Derivado en reclamo <a @click="goTo('/reclamos/218975')" class="badge badge-secondary" >#33091</a></td>     <!-- Redirige a Detalle Reclamo -->
+                        </tr>
+                        <tr>
+                            <th scope="row">007</td>
+                            <td>27845612</td>
+                            <td>2019-04-13</td>
+                            <td>Llamada telefónica</td>
+                            <td>Resuelto</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">008</td>
+                            <td>34833223</td>
+                            <td>2019-04-13</td>
+                            <td>Llamada telefónica</td>
+                            <td>Resuelto</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">009</td>
+                            <td>26789321</td>
+                            <td>2019-04-14</td>
+                            <td>Formulario Web</td>
+                            <td>Resuelto</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </form>
+
+                <nav aria-label="Paginación">
+                    <p class="text-center text-muted">1-9 de 26</p>
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Anterior</a>
+                        </li>
+                        <li class="page-item active" aria-current="page">
+                            <span class="page-link">1<span class="sr-only">(current)</span></span>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">Siguiente</a>
+                        </li>
+                    </ul>
+                </nav>
+        </div>
+            
+        
+    </template>
+
+    <template id="informes">
+            <div class="container informes main_container">
+                    <div class="row">
+                        <div class="col-md-6 offset-md-3">
+                            <div class="card bg-light my-3">
+                                <div class="card-header">
+                                    <h3 class="text-center">Nuevo informe</h3>
+                                </div>
+                                <div class="card-body">
+                                    <h5>Seleccione periodo:</h5>
+                                    <div class="input-group date">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
+                                            </div>
+                                        <input type="text" class="form-control" id="datetime">
+                                    </div>
+            
+                                    <h5>Seleccione tipo:</h5>
+                                    <div class="input-group date">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text"><i class="far fa-chart-bar"></i></div>
+                                            </div>
+                                        <select class="form-control">
+                                            <option>Informe de Estadístico</option>
+                                            <option>Informe de Producción</option>
+                                            <option>Informe de Comercialización</option>
+                                            <option>Informe de Reclamos Mensuales</option>
+                                        </select>
+                                    </div>
+                                    <div class="text-center mt-3">
+                                        <a href="informe.pdf" target="_blank" class="btn btn-secondary">Generar</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <hr>
+            
+                    <h3>Informes anteriores</h3>
+                    <div class="table-responsive">
+                        <table id="myTable" class="table table-hover table-bordered table-striped">
+                            <thead class="thead-dark thead-max">
+                                <tr>
+                                    <th scope="col">Nº Informe</th>
+                                    <th scope="col">Tipo de informe</th>
+                                    <th scope="col">Periodo</th>
+                                    <th scope="col">Fecha de creación</th>
+                                    <th scope="col">Creado por</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td scope="row">18975</td>
+                                    <td>Comercialización</td>
+                                    <td>2019-02</td>
+                                    <td>2019-03-03</td>
+                                    <td>Gerente Comercial</td>
+                                    <td><a class="badge badge-secondary" role="button" href="#">Ver</a>&nbsp<a class="badge btn-chaque" role="button" href="#">Borrar</a></td>
+                                </tr>
+                                <tr>
+                                    <td scope="row">18976</td>
+                                    <td>Producción</td>
+                                    <td>2019-02</td>
+                                    <td>2019-03-06</td>
+                                    <td>Gerente Producción</td>
+                                    <td><a class="badge badge-secondary" role="button" href="#">Ver</a>&nbsp<a class="badge btn-chaque" role="button" href="#">Borrar</a></td>
+                                </tr>
+                                <tr>
+                                    <td scope="row">15787</td>
+                                    <td>Reclamos mensuales</td>
+                                    <td>2019-02</td>
+                                    <td>2019-03-04</td>
+                                    <td>Gerente Producción</td>
+                                    <td><a class="badge badge-secondary" role="button" href="#">Ver</a>&nbsp<a class="badge btn-chaque" role="button" href="#">Borrar</a></td>
+                                </tr>
+                                <tr>
+                                    <td scope="row">18722</td>
+                                    <td>Estadístico</td>
+                                    <td>2019-03</td>
+                                    <td>2019-04-02</td>
+                                    <td>Gerente General</td>
+                                    <td><a class="badge badge-secondary" role="button" href="#">Ver</a>&nbsp<a class="badge btn-chaque" role="button" href="#">Borrar</a></td> 
+                                </tr>
+                                <tr>
+                                    <td scope="row">15789</td>
+                                    <td>Estadístico</td>
+                                    <td>2019-02</td>
+                                    <td>2019-03-20</td>
+                                    <td>Gerente General</td>
+                                    <td><a class="badge badge-secondary" role="button" href="#">Ver</a>&nbsp<a class="badge btn-chaque" role="button" href="#">Borrar</a></td>
+                                    </tr>
+                            </tbody>
+                        </table>
+                    </div>
+            
+                    <nav aria-label="Paginación">
+                        <p class="text-center text-muted">1-6 de 16</p>
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Anterior</a>
+                            </li>
+                            <li class="page-item active" aria-current="page">
+                                <span class="page-link">1<span class="sr-only">(current)</span></span>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">Siguiente</a>
+                            </li>
+                        </ul>
+                    </nav>
+            
+                </div>
+    </template>
+
+    <template id="reclamos">
+        <div class="container mt-3 total-vh" style="margin-top: 10% !important;">
+            <h1 class="text-center">Últimos Reclamos</h1>
+
+            <div class="form-group">
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text"><i class="fas fa-search"></i></div>
+                    </div>
+                    <input type="text" id="myInput" onkeyup="myFunction()" class="form-control" placeholder="Buscar..."/>
+                </div>
+            </div>
+
+            <form>
+                <table id="myTable" class="table table-hover table-bordered table-striped">
+                    <thead class="thead-dark thead-max">
+                        <tr>
+                            <th scope="col" class="space-between">ID Reclamo <i class="fas fa-sort text-right"></i> </th>
+                            <th scope="col" class="space-between">Cliente <i class="fas fa-sort text-right"></i> </th>
+                            <th scope="col" class="space-between">DNI <i class="fas fa-sort text-right"></i> </th>
+                            <th scope="col" class="space-between">Fecha de alta <i class="fas fa-sort text-right"></i> </th>
+                            <th scope="col" class="space-between">Problema detectado <i class="fas fa-sort text-right"></i> </th>
+                            <th scope="col" class="space-between">Estado <i class="fas fa-sort text-right"></i> </th> <!-- (pendiente|en gestión|finalizado) -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr @click="goTo('/reclamos/218975')">
+                            <td scope="row">218975</td>
+                            <td>Barrios Alicia</td>
+                            <td>35496962</td>
+                            <td>2019-03-30</td>
+                            <td>Termotanque no enciende</td>
+                            <td>Pendiente &nbsp&nbsp&nbsp&nbsp <a class="badge badge-secondary" role="button" >Ver</a></td>  <!-- Detalle Reclamo -->
+                        </tr>
+                        <tr>
+                            <td scope="row">218976</td>
+                            <td>Irma Garcia</td>
+                            <td>23165789</td>
+                            <td>2019-04-06</td>
+                            <td>Anafes no mantiene llama</td>
+                            <td>Pendiente &nbsp&nbsp&nbsp&nbsp <a class="badge badge-secondary" role="button" >Ver</a></td>
+                        </tr>
+                        <tr>
+                            <td scope="row">215787</td>
+                            <td>Alicia Newman</td>
+                            <td>18025963</td>
+                            <td>2019-03-03</td>
+                            <td>Anafe abre llama muy grande</td>
+                            <td>En gestión &nbsp&nbsp&nbsp&nbsp <a class="badge badge-secondary" role="button" >Ver</a></td>
+                        </tr>
+                        <tr>
+                            <td scope="row">218722</td>
+                            <td>Miss Bisman</td>
+                            <td>12156789</td>
+                            <td>2019-03-02</td>
+                            <td>Calefon no calienta</td>
+                            <td>Finalizado &nbsp&nbsp&nbsp&nbsp <a class="badge badge-secondary" role="button" >Ver</a></td> 
+                        </tr>
+                        <tr>
+                            <td scope="row">215789</td>
+                            <td>Celina Edith</td>
+                            <td>45698789</td>
+                            <td>2019-02-20</td>
+                            <td>Calefon se apaga</td>
+                            <td>Finalizado &nbsp&nbsp&nbsp&nbsp <a class="badge badge-secondary" role="button" >Ver</a></td>
+                        </tr>
+                        <tr>
+                            <td scope="row">215679</td>
+                            <td>Alfredo Gómez</td>
+                            <td>16458693</td>
+                            <td>2019-02-03</td>
+                            <td>Anafe no prende</td>
+                            <td>En gestión &nbsp&nbsp&nbsp&nbsp <a class="badge badge-secondary" role="button" >Ver</a></td>
+                        </tr>
+                        <tr>
+                            <td scope="row">218678</td>
+                            <td>Emiliano Salinas</td>
+                            <td>19123653</td>
+                            <td>2019-02-02</td>
+                            <td>Calefon con fallas varias</td>
+                            <td>Finalizado &nbsp&nbsp&nbsp&nbsp <a class="badge badge-secondary" role="button" >Ver</a></td> 
+                        </tr>
+                        <tr>
+                            <td scope="row">215676</td>
+                            <td>Francisco Rodriguez</td>
+                            <td>27265394</td>
+                            <td>2019-01-20</td>
+                            <td>Calefon se apaga</td>
+                            <td>Finalizado &nbsp&nbsp&nbsp&nbsp <a class="badge badge-secondary" role="button" >Ver</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+
+            <nav aria-label="Paginación">
+                <p class="text-center text-muted">1-9 de 19</p>
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Anterior</a>
+                    </li>
+                    <li class="page-item active" aria-current="page">
+                        <span class="page-link">1<span class="sr-only">(current)</span></span>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Siguiente</a>
+                    </li>
+                </ul>
+            </nav>
+          
+        </div>
+
+      </div>
+    </template>
+
+    <template id="detalle_reclamo">
+            <div class="container" style="margin-top: 150px">
+        
+                    <h3 class="text-center mt-3">Reclamo N° #218975</h3>
+                    <h5 class="text-center mb-4 text-muted">Abierto el día 30 de Marzo de 2019</h5>
+            
+                    <div class="row">
+                        <div class="col-sm-6 col-md-5 offset-md-1">
+                            <div class="card bg-light my-3">
+                                <div class="card-header">
+                                    <h5 class="text-center"><i class="fas fa-user float-left"></i> Datos de Cliente</h5>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">Barrios Alicia</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">alibarrios@hotmail.com</h6>         
+                                    <p class="card-text">DNI: 35496962 &nbsp&nbsp&nbsp&nbsp Tel: 03624455788</p>
+                                    <p class="card-text">Cordoba 732, Resistencia, Chaco (3500)</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-5">
+                            <div class="card bg-light my-3">
+                                <div class="card-header">
+                                    <h5 class="text-center"><i class="fas fa-box-open float-left"></i> Datos del Producto</h5>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">Termotanque</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">Nro producto: 3220530223</h6>         
+                                    <p class="card-text">Modelo: TR-505</p>
+                                    <p class="card-text"> &nbsp </p>                        
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8 offset-md-2">
+                            <div class="card bg-light my-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Descripción del problema:</h5>
+                                    <p class="card-text">
+                                        El termotanque no enciende. Se encuentra conectado a la red eléctrica y la llave de paso de agua está abierta.
+                                        No se enciende la luz piloto.
+                                        El producto se encuentra dentro del rango de fechas de garantías.
+                                    </p>                        
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8 offset-md-2">
+                            <div class="card bg-light my-3">
+                                <div class="card-header">
+                                    <h5 class="text-center">Estado del Reclamo</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="alert alert-secondary" role="alert" v-if="pendiente">Pendiente</div>
+                                    <div class="alert alert-warning" role="alert" v-if="gestion">En gestión</div>
+                                    <div class="alert alert-success" role="alert" v-if="fin">Finalizado</div>
+            
+                                    <div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-4 col-form-label"><b>Fecha de Inicio:</b></label>
+                                            <div class="col-sm-6">
+                                                <p>{{fechaini}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-4 col-form-label"><b>Técnico Asociado:</b></label>
+                                            <div class="col-sm-6">
+                                                    <p>{{tecnico}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-4 col-form-label"><b>Fecha de Finalizado:</b></label>
+                                            <div class="col-sm-6">
+                                                <p>{{fechafin}}</p>
+                                            </div>
+                                        </div>
+            
+                                        <button class="btn btn-secondary btn-block" @click="gestionar()" v-if="pendiente">Tomar Reclamo</button>      <!-- Si estado es "Pendiente" # Solo para Técnicos -->                    
+                                        <button class="btn btn-secondary btn-block" @click="finalizar()" v-if="gestion">Finalizar Reclamo</button>      <!-- Si estado es "En Gestión" # Solo para Técnicos -->
+                                    </div>              
+                                                            
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+            
+                    <div class="row">
+                        <div class="col-md-8 offset-md-2" v-show="fin">
+            
+                            <h4>Detallar reparación:</h4>     <!-- Solo para Técnicos -->
+                            
+                            <form>   <!-- Solo para Técnicos -->
+                                <div class="form-group">
+                                    <textarea class="form-control" rows="5"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-secondary btn-block" id="confirmar" @click="goTo('/reclamos')">Confirmar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+            
+                    <br>
+            
+            
+                </div>
+    </template>
+
+    <template id="detalle_asistencia">
+        <div class="container" style="margin-top:150px">
+
+            <h3 class="text-center mt-3">Asistencia Nº #001</h3>
+            <h5 class="text-center mb-4 text-muted">Solicitado el día 23 de Marzo de 2019</h5>
+    
+            <div class="row">
+                <div class="col-sm-6 col-md-5 offset-md-1">
+                    <div class="card bg-light my-3">
+                        <div class="card-header">
+                            <h5 class="text-center"><i class="fas fa-user float-left"></i> Datos de Cliente</h5>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Walter Blanco</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">walterblanco@gmail.com</h6>         
+                            <p class="card-text">DNI: 33333333 &nbsp&nbsp&nbsp&nbsp Tel: 03624466777</p>
+                            <p class="card-text">Av. Italia 545, Resistencia, Chaco (3500)</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-5">
+                    <div class="card bg-light my-3">
+                        <div class="card-header">
+                            <h5 class="text-center"><i class="fas fa-box-open float-left"></i> Datos del Producto</h5>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Termotanque</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Nro producto: 6520530223</h6>         
+                            <p class="card-text">Modelo: TR-505</p>
+                            <p class="card-text"> &nbsp </p>                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <div class="card bg-light my-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Descripción del problema:</h5>
+                            <p class="card-text">
+                                El termotanque no llega a calentar lo suficiente. La luz de encendido funciona bien. Se escucha cuando se enciende pero luego de unos minutos el ruido se detiene y la luz de piloto queda encendida.
+                                El producto se encuentra dentro del rango de fechas de garantías.
+                            </p>                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            
+            
+            <form class="mb-5">
+                <div class="form-group row">
+                    <div class="col-md-8 offset-md-2">
+                        <h3>Responder:</h3>
+                        <textarea class="form-control" rows="5"></textarea>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="customFileLang" lang="es">
+                            <label class="custom-file-label" for="customFileLang">Seleccionar Archivo</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 offset-md-2">
+                        <button type="submit" class="btn btn-chaque btn-block"  @click="goTo('/reclamos')">Derivar a Servicio Técnico</button>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-secondary btn-block" @click="goTo('/asistencias')">Enviar respuesta</button>
+                    </div>
+                </div>
+            </form>
+        
+        </div>
+    </template>
+
+    <!-- <script id="ejemplo" type="text/template">
+        <p>Esto es un archivo js</p>
+    </script> -->
+
+    <!-- <template id="ejemplo">
+        <p>its work!</p>
+    </template> -->
+    <!-- <script src="ejemplo.js" type="text/template" id="ejemplo"></script> -->
+    <!-- etiqueta necesaria para usar VUE JS -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    <!-- <script src="https://unpkg.com/vue@2.5.17/dist/vue.js"></script> -->
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+    <!-- etiqueta que linkea el código vue que se utiliza para esta página -->
+    <script src="js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.28.14/js/jquery.tablesorter.min.js"></script>
+    <!-- Facu's datepicker -->
+    <script src="datepicker/js/bootstrap-datepicker.min.js"></script> <!-- DatePicker -->
+    <script src="datepicker/locales/bootstrap-datepicker.es.min.js"></script>
+    <script type="text/javascript">
+        $("#datetime").datepicker({
+            format: "yyyy-mm",
+            minViewMode: 1,
+            language: "es",
+            autoclose: true
+        });
+    </script>
+    <!-- <script src="js/jquery-1.6.3.min.js"></script> -->
+    <script src="js/coso.js"></script>
+    <script src="js/busqueda.js"></script>
+
+</body>
+
+</html>

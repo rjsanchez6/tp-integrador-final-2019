@@ -1,0 +1,235 @@
+.nueva_asistencia{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%; 
+    /* background-color: cadetblue; */
+}
+
+hr{
+    border: 1px solid #b9b9b9;
+    margin: 15px 0;
+    /* width: 100% */
+}
+
+.title{
+    font-size: 25px;
+    margin-bottom: 15px;
+}
+
+.sub_title{
+    font-size: 20px;
+    color: #6c757d ;
+    font-weight: 400;
+}
+
+/* ----------------------------- */
+
+.datos{
+    /* display: flex; */
+    /* background-color: red; */
+    /* align-self: center; */
+    width: 950px;
+    margin: 25px 0;
+}
+.flex-center-self{
+    align-self: center;
+}
+.datos .title{
+    /* margin-bottom: 50px; */
+}
+.form-group-nb{
+    /* background-color: cadetblue; */
+    /* padding: 5px; */
+    /* max-width: 950px; */
+    display: flex;
+    flex-direction: column;
+}
+.form-width-large-nb{
+    /* background-color: burlywood; */
+    /* width: calc( 50% - 10px); */
+    width: 50%;
+}
+.form-width-medium-nb{
+    /* background-color: burlywood; */
+    /* width: calc( 33% - 10px); */
+    width: 33%;
+}
+.form-width-small-nb {
+    /* background-color: burlywood; */
+    /* width: calc( 25% - 10px); */
+    width: 25%;
+}
+.group-row-nb{
+    width: 100%;
+    display: flex;
+    /* background-color:red; */
+    justify-content: space-between;
+}
+
+.form-row-nb{
+    display: flex;
+    margin: 15px 0;
+    flex-direction: column;
+}
+.flex-center{
+    align-items: center;
+    /* justify-content: center; */
+}
+.form-row-nb label{
+    margin-right: 10px;
+    font-size: 20px;
+    /* background-color: red; */
+}
+.form-row-nb input, .form-row-nb select {
+    border: 1px #b9b9b9 solid;
+    border-radius: 5px;
+    width: 200px;
+    padding: 5px;
+}
+
+
+.verificacion{
+    /* background-color: rgb(99, 107, 104); */
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Cuadro de pasos a seguir */
+.asesoria{
+    /* background-color: red; */
+    border: 1px solid #ced4da;
+    padding: 10px;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+}
+
+.soluciones{
+    margin: 10px 0;
+}
+
+.soluciones ol{
+    padding-left: 25px;
+}
+
+.soluciones ol li{
+    margin: 5px 0;
+    font-size: 20px;
+}
+
+.options{
+    /* background-color: red; */
+    display: flex;
+    justify-content: flex-end;
+}
+
+.options a{
+    margin: 5px 10px;
+    color:#007bff;
+    font-size: 16px;
+    cursor: pointer;
+    /* background-color: red; */
+}
+/* ------------------------- */
+
+/* Vista previa del producto */
+.producto{
+    width: 300px;
+    border: 1px solid #ced4da;
+    /* background-color: red; */
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+/* ------------------------------ */
+.resultado{
+    /* background-color: rgba(255, 0, 0,0.5); */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.btn-nb{
+    cursor: pointer;
+    background-color: #6c757d;
+    padding: 10px 20px;
+    border-radius: 8px;
+    color:white;
+    font-size: 15px;
+}
+
+.red-nb{
+    background-color: #ac3145;
+}
+.green-nb{
+    background-color: #638b8b;
+}
+
+.btn2-nb{
+    background-color: #638b8b;
+    color:white;
+    font-size: 15px;
+    border-radius: 8px;
+    width: 100px;
+    height: 35px;
+    align-self: flex-end;
+    cursor: pointer;
+}
+
+.resultado textarea{
+    border: 1px solid #b9b9b9;
+    width: 350px;
+    height: 150px;
+    padding: 10px;
+}
+
+
+.datos_tecnico{
+    display: flex;
+    flex-direction: column;
+}
+
+.datos_tecnico .info{
+    display: flex;
+    justify-content: space-between;
+    /* background-color: rgba(255, 0, 0,0.5); */
+}
+.datos_tecnico .info .map{
+    margin-right: 15px;
+    width: 50%
+}
+.datos_tecnico .info .map iframe{
+    height: 100%;
+    width: 100%;
+}
+
+.datos_tecnico .info .datos-tec{
+    padding: 10px 0 0 10px;
+    width: 400px;
+    height: 250px;
+    border: 1px solid #b9b9b9;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.datos_tecnico .info .datos .domicilio{
+    margin-top: 30px;
+    font-size: 20px;
+}
+
+.choose{
+    /* width: 730px; */
+    display: flex;
+    justify-content: center;
+    padding: 30px 0 ;
+}
+
+.choose .btn-nb{
+    font-size: 25px;
+}
+
+.solucion{
+    display: flex;
+    justify-content: space-between;
+}

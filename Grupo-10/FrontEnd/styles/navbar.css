@@ -1,0 +1,93 @@
+.navbar-nb{
+    width: 100%;
+    /* background-color: red; */
+}
+.navbar-nb .container{
+    /* background-color: red; */
+    padding: 10px;
+}
+.navbar-nb .header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* background-color: red; */
+}
+.navbar-nb .header .logo{
+    width: 250px;
+}
+.navbar-nb .header .button{
+    width: 30px;
+    /* background-color: blue; */
+}
+.navbar-nb .menu-nb{
+    /* background-color: red; */
+}
+.navbar-nb .menu-nb .item-nb{
+    margin: 15px 0;
+}
+.navbar-nb .menu-nb .router-link-active  {
+    background-color: #638b8b;
+} 
+.navbar-nb .menu-nb .router-link-active a {
+    color: white !important;
+} 
+.navbar-nb .menu-nb .item-nb:hover {
+    background-color: #638b8b;
+    /* color:white; */
+}
+.navbar-nb .menu-nb .item-nb:hover a{
+    color: white !important;
+}
+.navbar-nb .menu-nb .item-nb a{
+    color: #5c686a;
+    cursor: pointer;
+}
+
+.clientes{
+    font-size: 35px
+}
+/* Estilos para tamaño de pantalla de 768px en adelante */
+@media (min-width:768px) {
+    .navbar-nb{
+        display: flex;
+        justify-content: center;
+        -webkit-box-shadow: 0px 5px 5px 0px rgba(194,183,194,1);
+        -moz-box-shadow: 0px 5px 5px 0px rgba(194,183,194,1);
+        box-shadow: 0px 5px 5px 0px rgba(194,183,194,1);
+        position: fixed;
+        z-index: 999 !important;
+        background-color: white;
+    }
+    .navbar-nb .container{
+        /* background-color: cadetblue; */
+        width: 100%;
+        display: flex;
+        max-width: 1400px;
+        justify-content: space-between;
+        /* padding-top: 0; */
+        /* align-self: center; */
+    }
+
+    .navbar-nb .menu-nb{
+        display: flex;
+    }
+
+    .navbar-nb .menu-nb .item-nb{
+        display: flex;
+        align-items: center;
+        padding: 0 10px;
+        /* background-color: aquamarine; */
+        border-right: 1px solid #929395;
+    }
+    .navbar-nb .menu-nb .item-nb:last-child{
+        border: none;
+    }
+}
+@media(min-width: 1024px){
+    .navbar-nb .menu-nb .item-nb{
+        padding: 0 20px;
+    }
+}
+
+
+/* estilos del cuerpo de la pagina */

@@ -1,0 +1,167 @@
+.slide-enter{
+    transform: translateX(1000px);
+}
+.slide-enter-active, .slide-leave-active{
+    transition: transform 0.5s;
+}
+.slide-leave-to{
+    transform: translateX(-1000px);
+}
+
+
+.clientes-root{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    /* height: auto; */
+    /* overflow: auto; */
+    /* background-color: red; */
+}
+
+.navbar-nb.clientes{
+    height: 90px;
+}
+
+.clientes-root input, .clientes-root textarea, .clientes-root select{
+    color: #638b8b !important;
+}
+
+
+.clientes-banner{
+    width: 100%;
+    height: 350px;
+    margin-top: 90px;
+    text-shadow: 4px 2px 6px rgba(0,0,0,0.8);
+    /* background-color: red; */
+    background-image: url('../assets/img/atencion_cliente.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.clientes-banner p{
+    text-align: center;
+    /* color: #648b8a; */
+    color: white;
+    /* font-family: Roboto; */
+    /* font-weight: 100; */
+    font-size: 40px;
+}
+
+.form-clientes{
+    /* padding: 25px; */
+    width: 100%;
+    max-width: 1400px;
+    align-self: center;
+    /* padding: 0 10px; */
+    /* height: 3000px; */
+    /* background-color: red; */
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 2fr 1fr;
+}
+
+.titulo{
+    color: #575151;
+    font-size: 45px;
+    margin: 15px 0;
+}
+
+.descripcion{
+    color: #918787;
+    font-size: 20px;
+    margin-bottom: 50px;
+}
+
+.call-us a{
+    font-size: 50px;
+    color: rgb(100, 139, 138) !important;
+}
+
+.form-online{
+    padding-left: 25px;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.form-producto{
+    display: inline-block;
+    /* background-color: antiquewhite; */
+    /* width: 90%; */
+}
+.info-producto{
+    display: grid;
+    grid-gap: 20px;
+    grid-template-rows: auto 2fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    height: 500px;
+}
+/* 1era fila */
+.info-producto .inputs{
+    grid-column: 1/-1;
+    /* background-color: red; */
+    display: flex;
+} 
+
+.info-producto .inputs .custom-input-nb {
+    margin: 0 15px 0 0;
+}
+
+/* 2da fila */
+.info-producto .preview {
+    grid-column: 1/-1;
+    display: flex;
+    flex-direction: column;
+    /* background-color: cadetblue; */
+}
+.info-producto .custom-file-input-nb {
+    margin-bottom: 20px;
+}
+
+.info-producto .preview .preview-img{
+    /* grid-column: 0; */
+    /* width: 50%; */
+    height: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: 1px dashed  #4e5155;
+}
+
+
+.info-producto .consulta-text {
+    grid-column: 1/-1; 
+}
+
+.info-producto .consulta-text textarea {
+    height: 150px;
+}
+
+
+.form-boton{
+    cursor: pointer;
+    background-color: rgb(99, 139, 139);
+    width: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    margin: 25px 0;
+    border-radius: 10px;
+    align-self: flex-end;
+    color: white;
+}
+
+
+
+/* Formulario de datos del cliente */
+
+
+.form-datos-cliente{
+
+}
