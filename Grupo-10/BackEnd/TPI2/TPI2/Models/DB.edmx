@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Namespace="DB.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
+        <EntityContainer Name="DBTargetContainer" >
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="DB" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="DBContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ClienteSet" EntityType="DB.Cliente" />
+          <EntitySet Name="AsistenciaSet" EntityType="DB.Asistencia" />
+          <EntitySet Name="ModeloSet" EntityType="DB.Modelo" />
+          <EntitySet Name="CategoriaSet" EntityType="DB.Categoria" />
+          <AssociationSet Name="ModeloCategoria" Association="DB.ModeloCategoria">
+            <End Role="Modelo" EntitySet="ModeloSet" />
+            <End Role="Categoria" EntitySet="CategoriaSet" />
+          </AssociationSet>
+          <AssociationSet Name="FormularioCliente" Association="DB.FormularioCliente">
+            <End Role="Formulario" EntitySet="AsistenciaSet" />
+            <End Role="Cliente" EntitySet="ClienteSet" />
+          </AssociationSet>
+          <AssociationSet Name="FormularioModelo" Association="DB.FormularioModelo">
+            <End Role="Formulario" EntitySet="AsistenciaSet" />
+            <End Role="Modelo" EntitySet="ModeloSet" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" Nullable="false" />
+          <Property Name="apellido" Type="String" Nullable="false" />
+          <Property Name="dni" Type="String" Nullable="false" />
+          <Property Name="email" Type="String" Nullable="false" />
+          <Property Name="domicilio" Type="String" Nullable="false" />
+          <NavigationProperty Name="Formulario" Relationship="DB.FormularioCliente" FromRole="Cliente" ToRole="Formulario" />
+        </EntityType>
+        <EntityType Name="Asistencia">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" Nullable="false" />
+          <Property Name="apellido" Type="String" Nullable="false" />
+          <Property Name="dni" Type="String" Nullable="false" />
+          <Property Name="email" Type="String" Nullable="false" />
+          <Property Name="telefono" Type="String" Nullable="false" />
+          <Property Name="consulta" Type="String" Nullable="false" />
+          <NavigationProperty Name="Cliente" Relationship="DB.FormularioCliente" FromRole="Formulario" ToRole="Cliente" />
+          <Property Name="imagen" Type="String" Nullable="false" />
+          <Property Name="esCliente" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Modelo" Relationship="DB.FormularioModelo" FromRole="Formulario" ToRole="Modelo" />
+        </EntityType>
+        <EntityType Name="Modelo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" Nullable="false" />
+          <NavigationProperty Name="Formulario" Relationship="DB.FormularioModelo" FromRole="Modelo" ToRole="Formulario" />
+        </EntityType>
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="ModeloCategoria">
+          <End Type="DB.Modelo" Role="Modelo" Multiplicity="*" />
+          <End Type="DB.Categoria" Role="Categoria" Multiplicity="1" />
+        </Association>
+        <Association Name="FormularioCliente">
+          <End Type="DB.Asistencia" Role="Formulario" Multiplicity="*" />
+          <End Type="DB.Cliente" Role="Cliente" Multiplicity="1" />
+        </Association>
+        <Association Name="FormularioModelo">
+          <End Type="DB.Asistencia" Role="Formulario" Multiplicity="*" />
+          <End Type="DB.Modelo" Role="Modelo" Multiplicity="1" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
+        <Alias Key="Model" Value="DB" />
+        <Alias Key="Target" Value="DB.Store" />
+        <EntityContainerMapping CdmEntityContainer="DBContainer" StorageEntityContainer="DBTargetContainer">
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
