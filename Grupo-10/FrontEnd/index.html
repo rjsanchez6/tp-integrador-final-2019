@@ -65,7 +65,7 @@
                                             :options="['Anafe', 'Termotanque']" 
                                             class="form-width-large-nb"
                                         ></custom-select>
-                                        <custom-input :name="'Modelo'" class="form-width-large-nb"></custom-input> 
+                                        <custom-input @event="setValue(...arguments)" :name="'Modelo'" class="form-width-large-nb"></custom-input> 
                                     </div>
                                     <div class="preview">
                                         <custom-file-input @imgloaded="setPreview(...arguments)" :name="'Foto del producto'"></custom-file-input>    
@@ -76,7 +76,10 @@
                                         ></div>
                                     </div>
                                     <div class="consulta-text">
-                                        <custom-text-input :name="'Descríbanos su consulta'"></custom-text-input>
+                                        <custom-text-input 
+                                            :name="'Descríbanos su consulta'"
+                                            v-model="form.message"
+                                        ></custom-text-input>
                                     </div>
                                 </div>
                             </div>

@@ -29,6 +29,19 @@ var main = new Vue({
             imagePreview: 'assets/img/file.svg',
             producto: true,
             datosCliente: false,
+            form: {
+                category: null,
+                model: null,
+                message: null,
+                name: null,
+                dni: null,
+                phone: null,
+                email: null,
+                address: null,
+                city: null,
+                location: null,
+                cp: null,
+            }
         }
     },
     methods: {
@@ -52,6 +65,9 @@ var main = new Vue({
             } else{
                console.log('enviar')
             }
+        },
+        setValue(algo) {
+            console.log(`setvalue: ${algo}`)
         }
     },
 })
