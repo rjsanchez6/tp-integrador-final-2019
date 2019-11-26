@@ -10,6 +10,7 @@ namespace TPI2
         public static void Register(HttpConfiguration config)
         {
             // Configuración y servicios de API web
+            config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
 
             // Rutas de API web
             config.MapHttpAttributeRoutes();
