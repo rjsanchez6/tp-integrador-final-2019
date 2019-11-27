@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="6e4c5c71189d4f4e8f86915f25a68d22" Name="Diagram1">
+        <EntityTypeShape EntityType="ModeloTPI2.Asistencia" Width="1.5" PointX="4.5" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModeloTPI2.CategoriaProducto" Width="1.5" PointX="7.125" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModeloTPI2.Cliente" Width="1.5" PointX="1.625" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModeloTPI2.ModeloProducto" Width="1.5" PointX="7.125" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModeloTPI2.sysdiagrams" Width="1.5" PointX="10" PointY="1.625" IsExpanded="true" />
+        <AssociationConnector Association="ModeloTPI2.FK_Asistencia_Cliente" ManuallyRouted="false" />
+        <AssociationConnector Association="ModeloTPI2.FK_Asistencia_ModeloProducto" ManuallyRouted="false" />
+        <AssociationConnector Association="ModeloTPI2.FK_ModeloProducto_CategoriaProducto" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

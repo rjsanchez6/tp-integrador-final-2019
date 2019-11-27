@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ModeloTPI2" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Asistencia">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="dni" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="consulta" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="esCliente" Type="Boolean" Nullable="false" />
+    <Property Name="id_modelo" Type="Int32" />
+    <Property Name="id_cliente" Type="Int32" />
+    <Property Name="modelo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Cliente" Relationship="Self.FK_Asistencia_Cliente" FromRole="Asistencia" ToRole="Cliente" />
+    <NavigationProperty Name="ModeloProducto" Relationship="Self.FK_Asistencia_ModeloProducto" FromRole="Asistencia" ToRole="ModeloProducto" />
+  </EntityType>
+  <EntityType Name="CategoriaProducto">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="ModeloProducto" Relationship="Self.FK_ModeloProducto_CategoriaProducto" FromRole="CategoriaProducto" ToRole="ModeloProducto" />
+  </EntityType>
+  <EntityType Name="Cliente">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="dni" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="direccion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Asistencia" Relationship="Self.FK_Asistencia_Cliente" FromRole="Cliente" ToRole="Asistencia" />
+  </EntityType>
+  <EntityType Name="ModeloProducto">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="id_categoria" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Asistencia" Relationship="Self.FK_Asistencia_ModeloProducto" FromRole="ModeloProducto" ToRole="Asistencia" />
+    <NavigationProperty Name="CategoriaProducto" Relationship="Self.FK_ModeloProducto_CategoriaProducto" FromRole="ModeloProducto" ToRole="CategoriaProducto" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK_Asistencia_Cliente">
+    <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Asistencia" Type="Self.Asistencia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cliente">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Asistencia">
+        <PropertyRef Name="id_cliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Asistencia_ModeloProducto">
+    <End Role="ModeloProducto" Type="Self.ModeloProducto" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Asistencia" Type="Self.Asistencia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ModeloProducto">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Asistencia">
+        <PropertyRef Name="id_modelo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ModeloProducto_CategoriaProducto">
+    <End Role="CategoriaProducto" Type="Self.CategoriaProducto" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ModeloProducto" Type="Self.ModeloProducto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CategoriaProducto">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="ModeloProducto">
+        <PropertyRef Name="id_categoria" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ConexionDBTPI2" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Asistencia" EntityType="Self.Asistencia" />
+    <EntitySet Name="CategoriaProducto" EntityType="Self.CategoriaProducto" />
+    <EntitySet Name="Cliente" EntityType="Self.Cliente" />
+    <EntitySet Name="ModeloProducto" EntityType="Self.ModeloProducto" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <AssociationSet Name="FK_Asistencia_Cliente" Association="Self.FK_Asistencia_Cliente">
+      <End Role="Cliente" EntitySet="Cliente" />
+      <End Role="Asistencia" EntitySet="Asistencia" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Asistencia_ModeloProducto" Association="Self.FK_Asistencia_ModeloProducto">
+      <End Role="ModeloProducto" EntitySet="ModeloProducto" />
+      <End Role="Asistencia" EntitySet="Asistencia" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ModeloProducto_CategoriaProducto" Association="Self.FK_ModeloProducto_CategoriaProducto">
+      <End Role="CategoriaProducto" EntitySet="CategoriaProducto" />
+      <End Role="ModeloProducto" EntitySet="ModeloProducto" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ModeloTPI2.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Asistencia">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="apellido" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="dni" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="telefono" Type="varchar" MaxLength="50" />
+    <Property Name="consulta" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="esCliente" Type="bit" Nullable="false" />
+    <Property Name="id_modelo" Type="int" />
+    <Property Name="id_cliente" Type="int" />
+    <Property Name="modelo" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="CategoriaProducto">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Cliente">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="apellido" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="dni" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="telefono" Type="varchar" MaxLength="50" />
+    <Property Name="direccion" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="ModeloProducto">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="id_categoria" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK_Asistencia_Cliente">
+    <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Asistencia" Type="Self.Asistencia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cliente">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Asistencia">
+        <PropertyRef Name="id_cliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Asistencia_ModeloProducto">
+    <End Role="ModeloProducto" Type="Self.ModeloProducto" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Asistencia" Type="Self.Asistencia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ModeloProducto">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Asistencia">
+        <PropertyRef Name="id_modelo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ModeloProducto_CategoriaProducto">
+    <End Role="CategoriaProducto" Type="Self.CategoriaProducto" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ModeloProducto" Type="Self.ModeloProducto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CategoriaProducto">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="ModeloProducto">
+        <PropertyRef Name="id_categoria" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ModeloTPI2StoreContainer">
+    <EntitySet Name="Asistencia" EntityType="Self.Asistencia" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CategoriaProducto" EntityType="Self.CategoriaProducto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ModeloProducto" EntityType="Self.ModeloProducto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Asistencia_Cliente" Association="Self.FK_Asistencia_Cliente">
+      <End Role="Cliente" EntitySet="Cliente" />
+      <End Role="Asistencia" EntitySet="Asistencia" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Asistencia_ModeloProducto" Association="Self.FK_Asistencia_ModeloProducto">
+      <End Role="ModeloProducto" EntitySet="ModeloProducto" />
+      <End Role="Asistencia" EntitySet="Asistencia" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ModeloProducto_CategoriaProducto" Association="Self.FK_ModeloProducto_CategoriaProducto">
+      <End Role="CategoriaProducto" EntitySet="CategoriaProducto" />
+      <End Role="ModeloProducto" EntitySet="ModeloProducto" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
