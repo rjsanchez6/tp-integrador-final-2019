@@ -60,12 +60,14 @@
                                 <div class="info-producto">
                                     <div class="inputs">
                                         <custom-select 
-                                            :name="'Producto'" 
+                                            class="form-width-large-nb"
+                                            :name="'Producto'"
                                             :select="'producto'" 
                                             :options="['Anafe', 'Termotanque']" 
-                                            class="form-width-large-nb"
+                                            atribute="category"
+                                            @bind="setValue(...arguments)"
                                         ></custom-select>
-                                        <custom-input @event="setValue(...arguments)" :name="'Modelo'" class="form-width-large-nb"></custom-input> 
+                                        <custom-input @bind="setValue(...arguments)" :name="'Modelo'" atribute="model" class="form-width-large-nb"></custom-input> 
                                     </div>
                                     <div class="preview">
                                         <custom-file-input @imgloaded="setPreview(...arguments)" :name="'Foto del producto'"></custom-file-input>    
@@ -73,12 +75,13 @@
                                         <div 
                                             class="preview-img" 
                                             :style="`background-image: url(${imagePreview})`"
-                                        ></div>
-                                    </div>
-                                    <div class="consulta-text">
-                                        <custom-text-input 
+                                            ></div>
+                                        </div>
+                                        <div class="consulta-text">
+                                            <custom-text-input 
                                             :name="'Descríbanos su consulta'"
-                                            v-model="form.message"
+                                            atribute="message"
+                                            @bind="setValue(...arguments)"
                                         ></custom-text-input>
                                     </div>
                                 </div>
@@ -88,23 +91,69 @@
                                 <p class="descripcion"> Te vamos a solicitar tus datos personales para poder identificarte como nuestro cliente:</p>
                                 <div class="info-datos">
                                     <div class="form-group-nb">
-                                        <custom-input :name="'Nombre y apellido'" class=""></custom-input>
+                                        <!-- <custom-input :name="'Nombre y apellido'" class=""></custom-input> -->
                                         <div class="group-row-nb">
-                                            <custom-input :name="'DNI'" class="form-width-large-nb"></custom-input>
-                                            <custom-input :name="'Teléfono'" class="form-width-large-nb"></custom-input>
+                                            <custom-input 
+                                                class="form-width-large-nb"
+                                                :name="'Nombre'"
+                                                atribute="name" 
+                                                @bind="setValue(...arguments)"
+                                            ></custom-input>
+                                            <custom-input 
+                                            class="form-width-large-nb"
+                                                :name="'Apellido'" 
+                                                atribute="surname" 
+                                                @bind="setValue(...arguments)"
+                                            ></custom-input>
                                         </div>
-                                        <custom-input :name="'Corre Electrónico'" class=""></custom-input>
-                                        <custom-input :name="'Domicilio'" class=""></custom-input>
+                                        <div class="group-row-nb">
+                                            <custom-input 
+                                                class="form-width-large-nb"
+                                                :name="'DNI'" 
+                                                atribute="dni" 
+                                                @bind="setValue(...arguments)"
+                                            ></custom-input>
+                                            <custom-input 
+                                                class="form-width-large-nb"
+                                                :name="'Teléfono'" 
+                                                atribute="phone" 
+                                                @bind="setValue(...arguments)"
+                                            ></custom-input>
+                                        </div>
+                                        <custom-input 
+                                            class=""
+                                            :name="'Corre Electrónico'" 
+                                            atribute="email" 
+                                            @bind="setValue(...arguments)"
+                                        ></custom-input>
+                                        <custom-input 
+                                            class=""
+                                            :name="'Domicilio'" 
+                                            atribute="address" 
+                                            @bind="setValue(...arguments)"
+                                        ></custom-input>
                                         <div class="group-row-nb">
                                             <custom-select 
+                                                class="form-width-large-nb"
                                                 :name="'Provincia'" 
                                                 :select="'provincia'" 
                                                 :options="['Catamarca', 'Santa Fe', 'Corrientes', 'Córdoba', 'Vilellas']" 
-                                                class="form-width-large-nb"
+                                                atribute="city"
+                                                @bind="setValue(...arguments)"
                                             ></custom-select>
-                                            <custom-input :name="'C.P'" class="form-width-large-nb"></custom-input>
+                                            <custom-input 
+                                                :name="'C.P'" 
+                                                class="form-width-large-nb"
+                                                atribute="cp" 
+                                                @bind="setValue(...arguments)"
+                                            ></custom-input>
                                         </div>
-                                        <custom-input :name="'Localidad'" class=""></custom-input> 
+                                        <custom-input
+                                            class=""
+                                            :name="'Localidad'" 
+                                            atribute="location" 
+                                            @bind="setValue(...arguments)"    
+                                        ></custom-input> 
                                     </div>
         
                                 </div>
@@ -130,7 +179,10 @@
                 <label>{{name}}: </label>
             </div>
             <div class="input-nb">
-                <input type="text" @input="$emit('event',$event.target.value)">
+                <input 
+                    type="text" 
+                    @input="$emit('bind', {value: $event.target.value, atribute})"
+                >
             </div>
         </div>
     </template>
@@ -152,7 +204,9 @@
                 <label>{{name}}: </label>
             </div>
             <div class="text-input-nb">
-                <textarea></textarea>
+                <textarea 
+                    @input="$emit('bind', {value: $event.target.value, atribute})"
+                ></textarea>
             </div>
         </div>
     </template>
@@ -167,14 +221,14 @@
                     <option value="">Seleccione {{select}}</option>
                     <option 
                         :value="provincia"
-                        @click="$emit('event', $event.target.value)" 
+                        @click="$emit('bind', { value: $event.target.value, atribute })" 
                         v-for="provincia in options"
                     >{{provincia}}</option>
                 </select>
             </div>
         </div>
     </template>
-
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <!-- <script src="ejemplo.js" type="text/template" id="ejemplo"></script> -->
     <!-- etiqueta necesaria para usar VUE JS -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
