@@ -1,0 +1,14 @@
+Por si se desconecta la BD: 
+Para conectar la Base de datos es necesario importar sqlite-jdbc-3.27.2.1.jar.
+En NetBeans esto se hace de la siguiente manera:
+	-> Click derecho en el icono del proyecto
+	-> Propiedades
+	-> Libraries
+	-> Add JAR
+	-> Seleccionamos el .jar
+
+Usuarios validos:
+	-> usuario:JorgeT clave:12345 rol:tecnico
+	-> usuario:JulianG clave:maxElec rol:postventa
+	-> usuario:VictorG clave:2019 rol:gerente
+Nota: los nombres de usuario son estrictos con los caracteres en mayusculas y minusculas.
