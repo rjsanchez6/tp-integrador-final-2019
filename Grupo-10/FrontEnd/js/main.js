@@ -79,9 +79,10 @@ var main = new Vue({
                formData.append('cp', this.form.cp);
                formData.append('imagen', this.imagePreview);
                 //    console.log(formData.forEach(value => console.log(value)));
-                axios.post('aquí va la URL', formData)
+                axios.post('http://localhost:63314/api/Asistencias', {dni: this.form.dni, modelo: this.form.model, nombre: this.form.name, apellido: this.form.surname, email:this.form.email, consulta: this.form.message, telefono: this.form.phone } )
                 .then(response => {
                     console.log(response);
+                    alert("Consulta enviada");
                 })
                 .catch(e => {
                     console.log ('error por catch', e);
