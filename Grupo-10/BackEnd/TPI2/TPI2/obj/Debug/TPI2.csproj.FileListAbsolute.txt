@@ -93,3 +93,6 @@ C:\Users\faram\Documents\Facultad\Diseño\GitDiseño\tp-integrador-final-2019\Gr
 C:\Users\faram\Documents\Facultad\Diseño\GitDiseño\tp-integrador-final-2019\Grupo-10\BackEnd\TPI2\TPI2\obj\Debug\TPI2.csproj.CopyComplete
 C:\Users\faram\Documents\Facultad\Diseño\GitDiseño\tp-integrador-final-2019\Grupo-10\BackEnd\TPI2\TPI2\obj\Debug\TPI2.dll
 C:\Users\faram\Documents\Facultad\Diseño\GitDiseño\tp-integrador-final-2019\Grupo-10\BackEnd\TPI2\TPI2\obj\Debug\TPI2.pdb
+C:\Users\faram\Documents\Facultad\Diseño\GitDiseño\tp-integrador-final-2019\Grupo-10\BackEnd\TPI2\TPI2\bin\System.Web.Cors.dll
+C:\Users\faram\Documents\Facultad\Diseño\GitDiseño\tp-integrador-final-2019\Grupo-10\BackEnd\TPI2\TPI2\bin\System.Web.Http.Cors.dll
+C:\Users\faram\Documents\Facultad\Diseño\GitDiseño\tp-integrador-final-2019\Grupo-10\BackEnd\TPI2\TPI2\bin\System.Web.Http.Cors.xml

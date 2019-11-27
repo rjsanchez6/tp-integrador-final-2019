@@ -12,6 +12,9 @@ namespace TPI2
             // Configuración y servicios de API web
             config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
 
+            // Habilitar Cors
+            config.EnableCors();
+
             // Rutas de API web
             config.MapHttpAttributeRoutes();
 

@@ -9,9 +9,12 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using TPI2.Models;
+using System.Web.Cors;
+using System.Web.Http.Cors;
 
 namespace TPI2.Controllers
 {
+    [EnableCors(origins:"http://localhost:8000", headers:"*", methods:"*")]
     public class AsistenciasController : ApiController
     {
         private ConexionDBTPI2 db = new ConexionDBTPI2();
